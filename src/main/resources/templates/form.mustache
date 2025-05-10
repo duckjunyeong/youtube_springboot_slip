@@ -7,19 +7,24 @@
     <title>회원가입</title>
 </head>
 <body>
+{{> _nav}}
 <div class="container">
     <form action="/user/create" method="POST">
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+            <label for="userId" class="form-label">사용자 아이디</label>
+            <input type="text" class="form-control" id="userId" name="userId">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password">
+            <input type="password" class="form-control" id="password" name="password">
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">name</label>
-            <input type="text" class="form-control" id="name">
+            <input type="text" class="form-control" id="name" name="name">
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
