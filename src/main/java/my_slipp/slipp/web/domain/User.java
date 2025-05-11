@@ -1,9 +1,24 @@
-package my_slipp.slipp.web.controller;
+package my_slipp.slipp.web.domain;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
+  @Id
+  @GeneratedValue
+  private Long id;
+
+  @Column(nullable = false)
   private String userId;
+
+  @Column(nullable = false)
   private String password;
+
+  @Column(nullable = false)
   private String name;
+
+  @Column(nullable = false)
   private String email;
 
   public String getUserId() {
