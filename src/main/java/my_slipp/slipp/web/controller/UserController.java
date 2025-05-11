@@ -13,7 +13,7 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-  private static final String USER_SESSIONKEY = "loggedInUser";
+  private static final String USER_SESSIONKEY = "user";
   @Autowired
   private UserRepository userRepository;
 
@@ -37,20 +37,33 @@ public class UserController {
   }
 
   @PostMapping("/login")
-  public String login(String userId, String password, HttpSession httpSession){
+  public String login(String userId, String password, HttpSession httpSession, Model model){
     User user = userRepository.findByUserId(userId);
     if (!user.getPassword().equals(password)){
       return "login_failed";
     }
 
-    httpSession.setAttribute(USER_SESSIONKEY, user.getUserId());
+    httpSession.setAttribute("user", user);
     return "redirect:/";
   }
 
-  @GetMapping("/updateForm")
-  public String updateForm(String userId, Model model){
-    User user = userRepository.findByUserId(userId);
-    model.addAttribute("user", user);
+  @GetMapping("/updateForm/{id}")
+  public String updateForm(@PathVariable Long id, Model model, HttpSession httpSession){
+    User sessionUser = (User) httpSession.getAttribute("user");
+    if (sessionUser.getUserId() == null){
+      return "redirect:/user/list";
+    }
+
+    if (sessionUser.getId() != id){
+      return "redirect:/user/list";
+    }
+
+    Optional<User> user = userRepository.findById(id);
+    if (user.isEmpty()){
+      return "redirect:/user/list";
+    }
+
+    model.addAttribute("user", user.get());
     return "updateForm";
   }
 
@@ -71,5 +84,11 @@ public class UserController {
   public String list(Model model){
     model.addAttribute("users", userRepository.findAll());
     return "list";
+  }
+
+  @GetMapping("/logout")
+  public String logout(HttpSession httpSession){
+    httpSession.removeAttribute("user");
+    return "redirect:/";
   }
 }

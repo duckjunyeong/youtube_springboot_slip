@@ -9,17 +9,25 @@ public class User {
   @GeneratedValue
   private Long id;
 
-  @Column(nullable = false)
+  @Column(name = "USERID", nullable = false)
   private String userId;
 
-  @Column(nullable = false)
-  private String password;
-
-  @Column(nullable = false)
+  @Column(name = "NAME", nullable = false)
   private String name;
 
-  @Column(nullable = false)
+  @Column(name = "PASSWORD", nullable = false)
+  private String password;
+
+  @Column(name = "EMAIL", nullable = false)
   private String email;
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
 
   public String getUserId() {
     return userId;
