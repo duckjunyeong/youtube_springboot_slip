@@ -38,28 +38,19 @@ public class UserController {
 
   @PostMapping("/login")
   public String login(String userId, String password, HttpSession httpSession){
-    Optional<User> user = userRepository.findUserByUserId(userId);
-    if (user.isEmpty()){
+    User user = userRepository.findByUserId(userId);
+    if (!user.getPassword().equals(password)){
       return "login_failed";
     }
 
-    User existUser = user.get();
-    if (!existUser.getPassword().equals(password)){
-      return "login_failed";
-    }
-
-    httpSession.setAttribute(USER_SESSIONKEY, existUser.getUserId());
+    httpSession.setAttribute(USER_SESSIONKEY, user.getUserId());
     return "redirect:/";
   }
 
   @GetMapping("/updateForm")
   public String updateForm(String userId, Model model){
-    Optional<User> user = userRepository.findUserByUserId(userId);
-    if (user.isEmpty()){
-      return "redirect:/";
-    }
-    User existUser = user.get();
-    model.addAttribute("user", existUser);
+    User user = userRepository.findByUserId(userId);
+    model.addAttribute("user", user);
     return "updateForm";
   }
 
