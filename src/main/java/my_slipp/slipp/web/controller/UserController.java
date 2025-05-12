@@ -13,13 +13,10 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/user")
 public class UserController {
+  private final String QUESTION_DIR = "user/";
+
   @Autowired
   private UserRepository userRepository;
-
-  @GetMapping("/signupForm")
-  public String signupForm(Model model){
-    return "userSignupForm";
-  }
 
   @PostMapping("/create")
   public String createUser(User user) {
@@ -28,11 +25,6 @@ public class UserController {
     }
     userRepository.save(user);
     return "redirect:/user/list";
-  }
-
-  @GetMapping("/loginForm")
-  public String loginForm(Model model){
-    return "loginForm";
   }
 
   @PostMapping("/login")
@@ -63,7 +55,7 @@ public class UserController {
     }
 
     model.addAttribute("user", user.get());
-    return "userUpdateForm";
+    return QUESTION_DIR + "userUpdateForm";
   }
 
   @PostMapping("/update/{id}")

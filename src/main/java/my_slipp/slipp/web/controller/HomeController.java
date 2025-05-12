@@ -17,4 +17,14 @@ public class HomeController {
     model.addAttribute("questions", questionRepository.findAll());
     return "index";
   }
+
+  @GetMapping("/loginForm")
+  public String loginForm(Model model){
+    return "loginForm";
+  }
+
+  @GetMapping("/signupForm")
+  public String signupForm(Model model){
+    return "SignupForm";
+  }
 }

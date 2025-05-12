@@ -16,13 +16,14 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/question")
 public class QuestionController {
+  private final String QUESTION_DIR = "question/";
   @Autowired
   QuestionRepository questionRepository;
 
   @GetMapping("/form")
   public String form(Model model){
     model.addAttribute("questions", questionRepository.findAll());
-    return "questionForm";
+    return QUESTION_DIR + "questionForm";
   }
 
   @GetMapping("/updateForm/{id}")
@@ -33,7 +34,7 @@ public class QuestionController {
     }
 
     model.addAttribute("question", question.get());
-    return "questionUpdateForm";
+    return QUESTION_DIR + "questionUpdateForm";
   }
 
   @PostMapping("/update/{id}")
@@ -58,8 +59,9 @@ public class QuestionController {
     if (question.isEmpty()){
       return "redirect:/";
     }
+    System.out.println(question.toString());
     model.addAttribute("question", question.get());
-    return "questionShow";
+    return QUESTION_DIR + "questionShow";
   }
 
   @PostMapping("/create")
