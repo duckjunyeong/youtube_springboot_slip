@@ -13,13 +13,12 @@ import java.util.Optional;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-  private static final String USER_SESSIONKEY = "user";
   @Autowired
   private UserRepository userRepository;
 
   @GetMapping("/signupForm")
   public String signupForm(Model model){
-    return "signupForm";
+    return "userSignupForm";
   }
 
   @PostMapping("/create")
@@ -64,7 +63,7 @@ public class UserController {
     }
 
     model.addAttribute("user", user.get());
-    return "updateForm";
+    return "userUpdateForm";
   }
 
   @PostMapping("/update/{id}")

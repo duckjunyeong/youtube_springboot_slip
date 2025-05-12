@@ -86,4 +86,11 @@ public class Question {
   public int hashCode() {
     return Objects.hash(id, writer, title, contents, createdAt);
   }
+
+  public void update(Question updateQuestion) {
+    this.writer = updateQuestion.getWriter();
+    this.title = updateQuestion.getTitle();
+    this.contents = updateQuestion.getContents();
+    this.createdAt = updateQuestion.getCreatedAt();
+  }
 }
