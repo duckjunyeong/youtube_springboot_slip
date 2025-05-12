@@ -1,5 +1,6 @@
 package my_slipp.slipp.web.controller;
 
+import my_slipp.slipp.web.domain.Answer;
 import my_slipp.slipp.web.domain.Question;
 import my_slipp.slipp.web.domain.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -53,14 +55,16 @@ public class QuestionController {
 
   @GetMapping("/{id}")
   public String questionShow(@PathVariable Long id, Model model){
-    System.out.println("questionShow function!!");
-    System.out.println("Id: " + id);
     Optional<Question> question = questionRepository.findById(id);
     if (question.isEmpty()){
       return "redirect:/";
     }
-    System.out.println(question.toString());
-    model.addAttribute("question", question.get());
+    Question existQuestion = question.get();
+
+    List<Answer> answers = existQuestion.getAnswers();
+    model.addAttribute("question", existQuestion);
+    model.addAttribute("answers", answers);
+    model.addAttribute("answerSize", answers.size());
     return QUESTION_DIR + "questionShow";
   }
 

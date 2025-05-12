@@ -3,6 +3,8 @@ package my_slipp.slipp.web.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +25,17 @@ public class Question {
 
   @Column(name = "CREATEDAT", nullable = false)
   private LocalDateTime createdAt;
+
+  @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+  private List<Answer> answers = new ArrayList<>();
+
+  public List<Answer> getAnswers() {
+    return answers;
+  }
+
+  public void setAnswers(List<Answer> answers) {
+    this.answers = answers;
+  }
 
   public LocalDateTime getCreatedAt() {
     return createdAt;
